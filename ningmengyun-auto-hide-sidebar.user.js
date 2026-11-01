@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         柠檬云财务自动隐藏右侧栏
 // @namespace    local
-// @version      1.3.2
+// @version      1.3.3
 // @description  自动收起右侧悬浮栏，并在每次展开/收起时保持原位置
 // @downloadURL  https://raw.githubusercontent.com/liliang13/ningmengyun-auto-hide-sidebar/main/ningmengyun-auto-hide-sidebar.user.js
 // @updateURL    https://raw.githubusercontent.com/liliang13/ningmengyun-auto-hide-sidebar/main/ningmengyun-auto-hide-sidebar.user.js
@@ -51,6 +51,7 @@
         if (!aside || aside.dataset.nmToggleBound) return;
         aside.dataset.nmToggleBound = '1';
 
+        // 记录收起前的 top，并在收起/展开后强制恢复，防止回到顶部
         aside.addEventListener('click', (event) => {
             const toggle = event.target.closest('.hide-aside, .show-aside, .item');
             if (!toggle) return;
