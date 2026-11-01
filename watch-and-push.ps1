@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Continue'
 
 $repo = $PSScriptRoot
 $scriptName = 'ningmengyun-auto-hide-sidebar.user.js'
