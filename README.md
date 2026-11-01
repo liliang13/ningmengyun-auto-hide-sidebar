@@ -30,7 +30,7 @@
 脚本只匹配：
 
 ```
-https://jpro6.ningmengyun.com/Default/Default*
+https://*.ningmengyun.com/*
 ```
 
 ## License
