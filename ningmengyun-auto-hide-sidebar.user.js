@@ -1,8 +1,10 @@
 // ==UserScript==
 // @name         柠檬云财务自动隐藏右侧栏
 // @namespace    local
-// @version      1.2.0
+// @version      1.3.0
 // @description  自动收起右侧悬浮栏，并在展开和收起时保持原位置
+// @downloadURL  https://raw.githubusercontent.com/liliang13/ningmengyun-auto-hide-sidebar/main/ningmengyun-auto-hide-sidebar.user.js
+// @updateURL    https://raw.githubusercontent.com/liliang13/ningmengyun-auto-hide-sidebar/main/ningmengyun-auto-hide-sidebar.user.js
 // @match        https://jpro6.ningmengyun.com/Default/Default*
 // @run-at       document-idle
 // @noframes
