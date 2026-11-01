@@ -6,7 +6,7 @@
 // @description  自动收起柠檬云财务右侧悬浮栏，并在展开和收起时保持原位置
 // @downloadURL  https://raw.githubusercontent.com/liliang13/ningmengyun-auto-hide-sidebar/main/ningmengyun-auto-hide-sidebar.user.js
 // @updateURL    https://raw.githubusercontent.com/liliang13/ningmengyun-auto-hide-sidebar/main/ningmengyun-auto-hide-sidebar.user.js
-// @match        https://jpro6.ningmengyun.com/Default/Default*
+// @match        https://*.ningmengyun.com/Default/Default*
 // @run-at       document-idle
 // @noframes
 // @grant        none
