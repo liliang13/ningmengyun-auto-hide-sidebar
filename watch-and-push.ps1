@@ -82,7 +82,6 @@ while ($true) {
 
         Invoke-Git -Arguments @('add', '--', $scriptName)
         Invoke-Git -Arguments @('commit', '-m', "Update userscript to $newVersion")
-        Invoke-Git -Arguments @('pull', '--rebase', 'origin', 'main')
         Invoke-Git -Arguments @('push', 'origin', 'main')
 
         Write-Log "Committed and pushed version $newVersion."
