@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         自动隐藏柠檬云财务右侧栏
 // @namespace    local
-// @author       LiLiang
-// @version      1.3.6
-// @description  自动收起柠檬云财务右侧悬浮栏，展开/收起时保持原位置
+// @author       Li Liang
+// @version      1.2.0
+// @description  自动收起柠檬云财务右侧悬浮栏，并在展开和收起时保持原位置
 // @downloadURL  https://raw.githubusercontent.com/liliang13/ningmengyun-auto-hide-sidebar/main/ningmengyun-auto-hide-sidebar.user.js
 // @updateURL    https://raw.githubusercontent.com/liliang13/ningmengyun-auto-hide-sidebar/main/ningmengyun-auto-hide-sidebar.user.js
 // @match        https://jpro6.ningmengyun.com/Default/Default*
@@ -15,60 +15,43 @@
 (function () {
     'use strict';
 
-    let lastTop = null;
-
-    const getAside = () => document.querySelector('.aside');
-
-    const saveTop = (aside) => {
-        if (!aside) return;
-        const top = aside.style.top || getComputedStyle(aside).top;
-        if (top && top !== 'auto') {
-            lastTop = top;
-        }
-    };
-
-    const enforceTop = (aside) => {
-        if (!aside || lastTop === null) return;
-        aside.style.setProperty('top', lastTop, 'important');
-        requestAnimationFrame(() => aside.style.setProperty('top', lastTop, 'important'));
-        setTimeout(() => aside.style.setProperty('top', lastTop, 'important'), 50);
-    };
-
-    const tryAutoHide = () => {
+    const hideSidebar = () => {
         const button = document.querySelector('.hide-aside[title="隐藏侧边"]');
         if (!button || button.getClientRects().length === 0) {
             return false;
         }
 
         const aside = button.closest('.aside');
-        saveTop(aside);
+        const savedTop = aside?.style.top;
+
         button.click();
-        enforceTop(aside);
-        bindToggleClicks(aside);
+
+        if (aside) {
+            let frame;
+            const restoreTop = () => {
+                cancelAnimationFrame(frame);
+                frame = requestAnimationFrame(() => {
+                    aside.style.top = savedTop;
+                });
+            };
+
+            aside.addEventListener('click', event => {
+                const item = event.target.closest('.item');
+                if (item === button || item === aside.lastElementChild) {
+                    restoreTop();
+                }
+            });
+        }
+
         return true;
     };
 
-    const bindToggleClicks = (aside) => {
-        if (!aside || aside.dataset.nmToggleBound) return;
-        aside.dataset.nmToggleBound = '1';
-
-        // 记录收起前的 top，并在收起/展开后强制恢复，防止回到顶部
-        aside.addEventListener('click', (event) => {
-            const toggle = event.target.closest('.hide-aside, .show-aside, .item');
-            if (!toggle) return;
-            const currentAside = toggle.closest('.aside');
-            saveTop(currentAside);
-            setTimeout(() => enforceTop(currentAside), 0);
-            setTimeout(() => enforceTop(currentAside), 50);
-        });
-    };
-
-    if (tryAutoHide()) {
+    if (hideSidebar()) {
         return;
     }
 
     const observer = new MutationObserver(() => {
-        if (tryAutoHide()) {
+        if (hideSidebar()) {
             observer.disconnect();
         }
     });
