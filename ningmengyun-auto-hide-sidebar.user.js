@@ -2,8 +2,8 @@
 // @name         自动隐藏柠檬云财务右侧栏
 // @namespace    local
 // @author       Li Liang
-// @version      1.2.1
-// @description  自动收起柠檬云财务右侧悬浮栏，并在展开和收起时保持原位置
+// @version      1.2.2
+// @description  自动收起柠檬云财务右侧悬浮栏，并在展开、收起和滚动时保持原位置
 // @downloadURL  https://raw.githubusercontent.com/liliang13/ningmengyun-auto-hide-sidebar/main/ningmengyun-auto-hide-sidebar.user.js
 // @updateURL    https://raw.githubusercontent.com/liliang13/ningmengyun-auto-hide-sidebar/main/ningmengyun-auto-hide-sidebar.user.js
 // @match        https://*.ningmengyun.com/*
@@ -34,6 +34,11 @@
                     aside.style.top = savedTop;
                 });
             };
+
+            window.addEventListener('scroll', restoreTop, {
+                passive: true,
+                capture: true
+            });
 
             aside.addEventListener('click', event => {
                 const item = event.target.closest('.item');
